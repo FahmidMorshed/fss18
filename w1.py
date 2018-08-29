@@ -373,7 +373,7 @@ def page22_sortWords():
     sortedWords = sorted(myWords, key=len, reverse=False)
     print (sortedWords)
     sortedWords2 = sorted(myWords)
-    print (sortedWords2)
+    print (len(sortedWords2))
     assert 1==1
 
 """
@@ -383,10 +383,150 @@ List Comparisions
 
 @O.k
 def page23_listComparisions():
-    pointsOfALine = [(x,y)
-                        for x in range(0, 10)
-                        for y in range(x+5, 20)]
-    print (pointsOfALine)
+    """Two lists and comparing them with one another. Another odd number lists just to check"""
+    
+    list1 = [(x1,y1)
+                        for x1 in range(0, 10)
+                        for y1 in range(x1+5, 20)]
+    list2 = [(x2,y2)
+                for x2 in range(3, 13)
+                for y2 in range(x2+1, 15)]
+    listOfOdds = [x for x in range(1,10) if x%2!=0]
+    print(listOfOdds)
+    print(len(list1))
+    print(len(list2))
+    assert not list1==list2
+    
+    
+"""
+Page 24
+Generators and Iterators
+"""
+@O.k
+def page24_generatorLoops():
+    """Creating random loops to see how generator and iterator works"""
+    def giveNextEvenLazy(n):
+        i=1
+        while i<n:
+            yield i
+            i+=2
+    list1 = []
+
+    for i in giveNextEvenLazy(10):
+        list1.append(i)
+        
+    list2 = [x for x in range (1, 10) if x%2!=0]
+    print (list2)
+    assert list1==list2    
+
+"""
+Page 25
+Randomness
+"""
+    
+@O.k
+def page25_random():
+    """Card picking using random. 
+    Used time as a seed to reflect true randomness.
+    First suffled, then split in two, then picked 2 cards from the 1st portion"""
+    import random
+   
+    from datetime import datetime
+    random.seed(datetime.now())
+   
+    deck = [(num, suit)
+           for num in range(1,14)
+           for suit in ["S" , "H", "D", "C"]]
+    
+    random.shuffle(deck)
+    
+    numOfCardsInSplit = random.randrange(1,52)
+    
+    partialDeck = random.sample(deck, numOfCardsInSplit)
+    
+    print ("You have " + str(len(partialDeck)) + " cards in your first split.")
+    
+    
+    myPick1 = random.choice(partialDeck)
+    deck.remove(myPick1)
+   
+    print("Your 1st Pick: " + str(myPick1))
+    print("Card left: " + str(len(deck)))
+    assert 51==len(deck)
+   
+    myPick2 = random.choice(deck)
+    deck.remove(myPick2)
+   
+    print("Your 2nd Pick: " + str(myPick2))
+    print("Card left: " + str(len(deck)))
+    assert 50==len(deck)
+   
+
+"""
+Page 26
+Regular Expression
+"""
+
+@O.k
+def page26_testATimeString():
+    """Regular Expression. A very basic date recognizer. 
+    It has some flaws, but for just testing purpose, it will work."""
+    def isADate(myDate):
+        if (re.match('(\d{2})[/.-](\d{2})[/.-](\d{4})$', myDate) is not None):
+            myMonth = myDate[0:2]
+            myDay = myDate[3:5]
+            myYear = myDate[6:]
+            if (int(myMonth) > 12): return False
+            if (int(myDay) > 31): return False
+            return True
+        else:
+            return False
+    print ("10.10.2018 is a valid date")
+    assert True == isADate("10.10.2018")
+    print ("Asbbasks is NOT")
+    assert False == isADate("Asbbasks")
+    print ("15/21/2018 is NOT")
+    assert False == isADate("15/21/2018")
+    
+    
+"""
+Page 27
+Classes
+"""    
+
+@O.k
+def page27_CourseClass():
+    """Just a simple course class to demonstrate the oop. Understanding self and init and repr."""
+    class Course:
+        def __init__(self, courseName, courseNumber):
+            if(courseName==None or courseName==""): raise ValueError("Must have a course name and number")
+            if(courseNumber==None or courseNumber==""): raise ValueError("Must have a course name and number")
+            
+            self.courseName = courseName
+            self.courseNumber = courseNumber
+            self.instructor = {}
+            
+        def __repr__(self):
+            return "Course Number: " + str(self.courseNumber) +\
+                "\nCourse Name: " + self.courseName + "\nInstructor: " + str(self.instructor.keys())
+        def editName(self, newName):
+            self.courseName = newName
+        def addInstructor(self, newInstructor):
+            self.instructor[newInstructor] = True
+        def removeInstructor(self, instructor):
+            del self.instructor[instructor]
+            
+    
+    myCourse = Course("CSC FSS", 791)
+    myCourse.addInstructor("Menzies")
+    myCourse.addInstructor("Krishna")
+    print (myCourse)
+    assert 1==1
+    
+    
+    
+        
+    
 #TODO
 def myGcd(a=1, b=1):
     """calcualte the greatest common divisor"""
