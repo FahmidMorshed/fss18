@@ -630,18 +630,5 @@ def page32_argsKwargs():
     
 
 
-    
-    
-    
-    
-        
-    
-#TODO
-def myGcd(a=1, b=1):
-    """calcualte the greatest common divisor"""
-    if(b>0):
-        x = (a%b)
-        return myGcd(b, x)
-    else:
-        return a    
+
 
