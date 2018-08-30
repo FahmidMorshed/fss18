@@ -523,6 +523,115 @@ def page27_CourseClass():
     print (myCourse)
     assert 1==1
     
+
+"""
+Page 28
+Functional Tool
+"""
+
+@O.k
+def page28_basicMath():
+    """Checking basic functools and how it works"""
+    from functools import partial
+    
+    def someWiredFunction(x, y, z):
+        return (x+y)**z
+    makeZ2 = partial(someWiredFunction, z=2)
+    
+    assert (someWiredFunction(1,3,2))==(makeZ2(1,3))
+    
+    
+"""
+Page 29
+Functional Tool, Maps, Reduce 
+"""   
+@O.k    
+def page29_MapsReduceFilter():
+    """Checking functools and map, reduce and filter"""
+    from functools import partial
+    from functools import reduce
+    
+    evenList = [x for x in range(7) if (x%2==0 and x>0)] #just trying and
+    print (evenList)
+    
+    def powerMe(x, y):
+        return x ** y
+    power2 = partial(powerMe, y=2)
+    
+    evenSqrList1 = [power2(x) for x in evenList]
+    evenSqrList2 = list(map(power2, evenList))
+    
+    assert evenSqrList1 == evenSqrList2
+    print(evenSqrList1)
+    
+    continousSqr = reduce(powerMe, evenList)
+    print (continousSqr)
+    assert ((2**4)**6)==continousSqr
+    
+    
+"""
+Page 30
+Enumerate
+"""
+@O.k
+def page30_enumerate():
+    """Enumerating through a list of words"""
+    aSimpleStr = "My name is khan. I eat paan. Not a fan of peter pan."
+    aSimpleStr = aSimpleStr.replace(".", "")
+    aSimpleStr = aSimpleStr.split(" ")
+    print(aSimpleStr)
+    for i, word in enumerate(aSimpleStr):
+        print(str(i) + ":" + word, end=" ")
+    
+    assert len(aSimpleStr)==13
+    
+
+"""
+Page 31
+Zip & Arg
+"""
+@O.k
+def page31_zipArg():
+    """Testing zip and unzip"""
+    list1 = [1, 2, 3, 4]
+    list2 = ['Me', 'Ma', 'Mo']
+    list3 = {"a", True, "Hi"}
+    combinedZip = list(zip(list1, list2, list3))
+    print (combinedZip)
+    
+    list1Unzip, list2Unzip, list3Unzip = zip(*combinedZip)
+    print (list(list1Unzip))
+    assert list1!=list(list1Unzip)
+    print (list(list2Unzip))
+    assert list2 == list(list2Unzip)
+    print (list(list3Unzip))
+    assert list3 == set(list3Unzip)
+    
+    
+"""
+Page 32
+Args & Kwargs
+"""
+@O.k
+def page32_argsKwargs():
+    """testing a args and kwargs for higher dimention function"""
+    def sqrIt(f):
+        def g(*args, **kwargs):
+            return f(*args, **kwargs)**2
+        return g
+    
+    
+    def increaseAndMulti(x, y):
+        return (x + 1) * y
+    
+    g = sqrIt(increaseAndMulti)
+    print (g(2,4))
+    assert (((2+1)*4)**2) == g(2,4)
+    
+
+
+    
+    
     
     
         
