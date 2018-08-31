@@ -158,7 +158,7 @@ def prep(src):
             floatFlag[count] = 0
         count += 1
   
-    finalList = src[0]
+    finalList = [src[0]]
     src = src[1:]
     for line in src:
         tempList = []
@@ -169,6 +169,7 @@ def prep(src):
             else:
                 tempList.append(word)
         finalList.append(tempList)
+    
     
     return finalList
 
