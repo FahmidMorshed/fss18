@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Aug 26 12:38:06 2018
-@author: Fahid
+@author: Fahmid Morshed
 """
 
 from __future__ import division
