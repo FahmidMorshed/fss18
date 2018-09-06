@@ -9,9 +9,9 @@ from __future__ import division
 from testEngine import O
 import random
 from math import floor
-
+from config import Config
 class Sample:
-    def __init__(self, myMax):
+    def __init__(self, myMax=Config().hi):
         self.max = myMax
         self.n = 0
         self.sorted = False

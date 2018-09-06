@@ -8,11 +8,13 @@ Created on Tue Sep  4 13:32:35 2018
 
 from __future__ import division
 from testEngine import O
-from simple import Sample
+from sample import Sample
 from config import Config
-
 class Num:
-    def __init__(self):
+    def same(x): 
+        return x
+    
+    def __init__(self, initList=[], f=same):
         self.n = 0
         self.mu = 0
         self.m2 = 0
@@ -21,14 +23,8 @@ class Num:
         self.hi = Config().hi
         self.some = Sample()
         self.w = 1
+        [self.numInc(x) for x in initList]
         
-    def nums(self, f):
-        if(f is None): #NOT SURE
-            return x
-        n = Num()
-        #NOT SURE for _,x in pairs(t) do numInc(n, f(x)) end
-        #NOT SURE t is self? then how it is a pair? pair of N?
-        return n
     
     def numInc(self, x):
         if x is None: 
@@ -62,10 +58,8 @@ class Num:
         return x
         
     def numNorm(self, x):
-        #return x=="?" and 0.5 or 
         return (x-self.lo) / (self.hi-self.lo + (10**-32))
 
-    #WILL IT WORK?
     def numXpect(i, j):
         n = i.n + j.n + .0001
         return i.n/n * i.sd + j.n/n * j.sd
@@ -74,12 +68,11 @@ class Num:
 
 @O.k
 def numOkay():
-    n = Num()
-    #NOT SURE
-    n = n.nums(4,10,15,38,54,57,62,83,100,100,174,190,215,225,
+    n = Num([4,10,15,38,54,57,62,83,100,100,174,190,215,225,
        233,250,260,270,299,300,306,333,350,375,443,475,
-       525,583,780,1000)
-    assert n.mu == 270.3
-    assert n.sd == 231.946
+       525,583,780,1000])
     print (n.mu)
-    print (n.sd)
+    print (round(n.sd,3))
+    assert n.mu == 270.3
+    assert round(n.sd,3) == 231.946
+    
