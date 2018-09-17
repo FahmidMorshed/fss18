@@ -7,6 +7,8 @@ Created on Thu Aug 30 19:07:01 2018
 
 import re, traceback
 from collections import defaultdict
+import sys
+sys.stdout = open('output.txt', 'w')
 
 class O():
     y = n = 0
@@ -192,3 +194,7 @@ def ok1(): ok0(DATA1)
 
 @O.k
 def ok2(): ok0(DATA2)
+
+
+if __name__ == '__main__':
+    O.report()
