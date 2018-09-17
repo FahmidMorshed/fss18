@@ -6,7 +6,6 @@ Created on Sat Sep 1, 2018
 """
 
 from __future__ import division
-from testEngine import O
 import random
 from math import floor
 from config import Config
@@ -41,18 +40,3 @@ class Sample:
         return s[ min(len(s), temp) ]
 
 
-"""Test Sample"""
-@O.k
-def sampleTest():
-    random.seed(1)
-    s = []
-    for i in range(5,6):
-        s.append(Sample(2**i))
-    for i in range (1,1001):
-        y = random.random()
-        for _,t in zip(s[:-1], s[1:]):
-            t.sampleInc(y)
-    
-    for _,t in zip(s[:-1], s[1:]):
-        print (t.max, t.nth(t, 0.5))
-        assert ((0.5 > t.nth(t,0.5)) and (t.nth(t,0.5) > 0.25)) #confused +- .2 of .5

@@ -6,7 +6,6 @@ Created on Wed Sep  5 10:46:51 2018
 @author: Fahmid
 """
 from __future__ import division
-from testEngine import O
 import math
 
 class Sym:
@@ -45,8 +44,7 @@ class Sym:
         return x
     
     def symEnt(self):
-        if not self._ent:
-            self._ent = 0
+        self._ent = 0
         for x, n in self.counts.items():
             p = n / self.n
             self._ent = self._ent - p * math.log(p,2)
@@ -55,11 +53,5 @@ class Sym:
     
     
     
-@O.k
-def baseSym():
-    s = Sym()
-    s = s.syms(['y','y','y','y','y','y','y','y','y',
-	        'n','n','n','n','n'])
-    print (s.counts)
-    assert (round(s.symEnt(), 4) == 0.9403)
+
     
