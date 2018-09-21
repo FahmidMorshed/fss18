@@ -8,12 +8,8 @@ Created on Tue Sep  4 13:32:35 2018
 
 from __future__ import division
 from testEngine import O
-from sym import Sym
 from sample import Sample
 from config import Config
-import random 
-import sys
-sys.stdout = open('output.txt', 'w')
 class Num:
     def same(x): 
         return x
@@ -70,42 +66,13 @@ class Num:
     
     
 
-"""Test Sample"""
-@O.k
-def sampleTest():
-    random.seed(1)
-    s = []
-    for i in range(5,7):
-        s.append(Sample(2**i))
-    for i in range (1,1001):
-        y = random.random()
-        for _,t in zip(s[:-1], s[1:]):
-            t.sampleInc(y)
-            
-    for _,t in zip(s[:-1], s[1:]):
-        print (t.max, t.nth(0.5))
-        assert (1==1) #confused +- .2 of .5
-
 @O.k
 def numOkay():
     n = Num([4,10,15,38,54,57,62,83,100,100,174,190,215,225,
        233,250,260,270,299,300,306,333,350,375,443,475,
        525,583,780,1000])
-    print ("mean, var, sd, tot, min, max")
-    print (n.mu, round(n.m2,3), round(n.sd,3), n.n, n.lo, n.hi)
-    print ()
+    print (n.mu)
+    print (round(n.sd,3))
     assert n.mu == 270.3
     assert round(n.sd,3) == 231.946
-    
-    
-@O.k
-def baseSym():
-    s = Sym()
-    s = s.syms(['y','y','y','y','y','y','y','y','y',
-	        'n','n','n','n','n'])
-    print (s.counts)
-    print ("Entropy: " + str(round(s.symEnt(), 4)))
-    assert (round(s.symEnt(), 4) == 0.9403)
-    
-    
     
