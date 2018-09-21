@@ -6,8 +6,8 @@ Created on Sept 1, 2018
 """
 import re, traceback
 
-#import sys
-#sys.stdout = open('output.txt', 'w')
+import sys
+sys.stdout = open('output.txt', 'w')
 
 
 class O():

@@ -9,6 +9,7 @@ import sys, zipfile, codecs, re
 from testEngine import O
 from num import Num
 from sym import Sym
+from tabulate import tabulate
 
 class Data:
     def __init__(self):
@@ -17,7 +18,7 @@ class Data:
         self.nums = {}
         self.clss = None
         self.rows = []
-        self.name = {}
+        self.name = []
         self._use = {}
         self.indeps = {}
     
@@ -28,23 +29,41 @@ class Data:
         return not self.indep(c)
     
 
+    """
+    Calculate the dom score between two rows. It uses normalize function to first normalize
+    the values. Then shouts the difference. 
     
+    Param:
+        List row1 - the values of row1
+        List row2 - the values of row2
+        
+    Return: 
+        Boolean 
+    """
     def dom(self, row1, row2):
         n = len(self.w)
         s1 = 0
         s2 = 0
         for c, x in self.w.items():
-            #TODO: normalize
-            a = numNorm(self.nums[c], row1[c].get(c))
-            b = numNorm(self.nums[c], row2[c].get(c))
+            a = numNorm(self.nums[c], row1[c])
+            b = numNorm(self.nums[c], row2[c])
             s1 = s1 - 10**(x * (a-b)/n)
             s2 = s2 - 10**(x * (b-a)/n)
         return s1/n < s2/n 
 
     
-
+    """
+    Append new column in the name field. Then calls the dom to calculate the dom score for
+    each column.
+    
+    Param:
+        Void
+        
+    Return:
+        Void
+    """
     def doms(self):
-        print(str(self.name) + ",>dom")
+        self.name.append(">dom")
         for row1 in self.rows:
             row1.append(0)
             for row2 in self.rows:
@@ -52,7 +71,17 @@ class Data:
                     continue
                 if(self.dom(row1, row2)):
                     row1[-1] += 1/len(self.rows) 
- 
+
+"""
+Calculate normalized value of x. num carries the value of hi & low
+
+Param:
+    Object Num - the values of hi and lo is inside
+    Float x - the value to be normalized
+
+Return:
+    Float normalizedValue
+"""
 def numNorm(num, x):
     hi = num.hi
     lo = num.lo
@@ -69,7 +98,7 @@ def addRow(data, cells):
                     data.nums.get(i).numInc(x)
                 else:
                     data.syms.get(i).symInc(x)
-            tempRows.append({i: x})
+            tempRows.append(x)
     data.rows.append(tempRows)
 
 def lines(src=None, f=None):
@@ -109,7 +138,7 @@ def header(data, cells):
     for i,x in enumerate(cells):
         if "%?" not in x:
             data._use[i] = True
-            data.name[i] = x
+            data.name.append(x)
             if re.search(r"[<>$]", x):
                 data.nums[i] = Num()
             else:
@@ -127,7 +156,16 @@ def header(data, cells):
             data._use[i] = False
 
                            
+"""
+Takes a csv file, reads through the data, creates the header and the rows using the Data object.
+Then calculates the doms and sort them by the dom scores. Finally, prints the data.
 
+Param:
+    String csvFileName - name of the csv file to read data from
+
+Return:
+    Void
+"""
 def printResult(csvFilename):
     first = True
     data = Data()
@@ -154,9 +192,20 @@ def printResult(csvFilename):
     
     for row in data.rows:
         row[-1] = round(row[-1], 2)
-        print(row)
+        
+    print("\n")    
+    print(tabulate(data.rows, headers=data.name))
 
 
+"""
+Just a helper function for sort. Takes the last element of the row for comparing
+
+Param:
+    List row - the total row as a list item
+    
+Return:
+    Float dom - last value of the list
+"""
 def sortByDom(row):
     return row[-1]
 
@@ -169,7 +218,7 @@ def test():
     #print ('=========Testing on "weather.csv"==========')
     #printResult("weather.csv")
     
-    #print('\n\n')
-    #print ('=======Testing on "weatherLong.csv"========')
-    #printResult("weatherLong.csv")
+    print('\n\n')
+    print ('=======Testing on "weatherLong.csv"========')
+    printResult("weatherLong.csv")
     assert 1==1
