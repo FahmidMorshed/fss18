@@ -10,6 +10,9 @@ from testEngine import O
 from num import Num
 from sym import Sym
 from tabulate import tabulate
+from config import Config
+
+from unsuper import *
 
 class Data:
     def __init__(self):
@@ -188,14 +191,18 @@ def printResult(csvFilename):
     
     data.doms()
     
-    data.rows.sort(key=sortByDom)
+    data.rows.sort(key=sortByDom, reverse=True)
     
     for row in data.rows:
         row[-1] = round(row[-1], 2)
         
-    print("\n")    
-    print(tabulate(data.rows, headers=data.name))
+    
+    
+    
+    unsuper(data)
 
+    print("\n")    
+    decideAndPrint(data)
 
 """
 Just a helper function for sort. Takes the last element of the row for comparing
@@ -209,10 +216,43 @@ Return:
 def sortByDom(row):
     return row[-1]
 
+
+
+"""
+Prints the data in tabular form. Decides if the table is large or not. If large, 
+only prints the first 10 columns and the last 10 columns
+
+Param:
+    Data object having all the rows and names
+
+Return:
+    Void
+"""
+def decideAndPrint(data):
+    if len(data.rows) < Config().maxRowsToPrint :
+        print(tabulate(data.rows, headers=data.name))
+        return
+    newRows = data.rows[:10]
+    dotRow = []
+    for x in data.rows[0]:
+        dotRow.append("-----")
+    
+    
+    newRows.append(dotRow)
+    for x in data.rows[0]:
+        dotRow.append("-----")
+    newRows.append(dotRow)
+    
+    newRows += data.rows[-10:]
+    #print(newRows)
+    print(tabulate(newRows, headers=data.name))
+    return
+    
+
 @O.k
 def test():
     print ('=========Testing on "auto.csv"=============')
-    printResult("auto.csv")
+    printResult("weatherLong.csv")
     
     #print('\n\n')
     #print ('=========Testing on "weather.csv"==========')
@@ -220,5 +260,9 @@ def test():
     
     print('\n\n')
     print ('=======Testing on "weatherLong.csv"========')
-    printResult("weatherLong.csv")
+    printResult("auto.csv")
+    
+    
+    
+    
     assert 1==1

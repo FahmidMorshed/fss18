@@ -44,7 +44,7 @@ class Num:
         return x
     
     def numDec(self, x):
-        if x in None:
+        if x is None:
             return x
         if(self.n == 1): 
             return x
