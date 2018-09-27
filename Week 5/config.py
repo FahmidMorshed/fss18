@@ -13,4 +13,5 @@ class Config:
         self.maxRowsToPrint = 30
         self.unsuperEnough = 0.5 #MAGIC
         self.unsuperMargin = 1.05 #MAGIC
+        self.sample = 100 #MAGIC
         self.garbageValue = 999999 #Used to replace ?

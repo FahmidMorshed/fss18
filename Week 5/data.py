@@ -11,6 +11,7 @@ from num import Num
 from sym import Sym
 from tabulate import tabulate
 from config import Config
+import random
 
 from unsuper import *
 
@@ -66,14 +67,18 @@ class Data:
         Void
     """
     def doms(self):
+        n = Config().sample
         self.name.append(">dom")
         for row1 in self.rows:
             row1.append(0)
-            for row2 in self.rows:
+            for i in range(0,n):
+                randNum = random.randint(0,len(self.rows) -1)
+                row2 = self.rows[randNum]
+            #for row2 in self.rows:
                 if(row1==row2):
                     continue
                 if(self.dom(row1, row2)):
-                    row1[-1] += 1/len(self.rows) 
+                    row1[-1] += 1/n
 
 """
 Calculate normalized value of x. num carries the value of hi & low
