@@ -27,10 +27,11 @@ class Num:
         
     
     def numInc(self, x):
-        if x is None: 
-            return x
+        if x == '?':
+            return
         self.n += 1
         self.some.sampleInc(x)
+
         d = x - self.mu
         self.mu +=  (d/self.n)
         self.m2 += (d*(x-self.mu))
@@ -40,25 +41,26 @@ class Num:
         if(x < self.lo):
             self.lo = x
         if(self.n >= 2):
-            self.sd = ((self.m2/(self.n - 1 + (10**-32)))**(.5))
+            self.sd = (self.m2/(self.n - 1 + 10**-32))**0.5
         return x
     
     def numDec(self, x):
-        if x is None:
-            return x
-        if(self.n == 1): 
-            return x
+        if x == '?':
+            return
+        if(self.n == 1):
+            return
         self.n -= 1
         d = x - self.mu
         self.mu -= (d/self.n)
         self.m2 -= (d*(x-self.mu))
+        self.m2 = abs(self.m2)
         
         if(self.n >= 2):
-            self.sd = ((self.m2/(self.n - 1 + (10**-32)))**(.5))
+            self.sd = (self.m2/(self.n - 1 + 10**-32))**0.5
         return x
         
     def numNorm(self, x):
-        return (x-self.lo) / (self.hi-self.lo + (10**-32))
+        return (x-self.lo) / (self.hi-self.lo + 10**-32)
 
     def numXpect(i, j):
         n = i.n + j.n + .0001

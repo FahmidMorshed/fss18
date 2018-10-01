@@ -11,7 +11,7 @@ import random
 from math import floor
 from config import Config
 class Sample:
-    def __init__(self, myMax=Config().hi):
+    def __init__(self, myMax=Config().sampleMax):
         self.max = myMax
         self.n = 0
         self.sorted = False

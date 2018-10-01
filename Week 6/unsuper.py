@@ -60,7 +60,7 @@ def unsuper(data):
                 r.numDec(x)
                 
                 if (l.n >= enough and r.n >= enough):
-                    temp = Num.numXpect(l, r)
+                    temp = Num.numXpect(l, r) * Config().unsuperMargin
                     if(isinstance(temp, complex)):
                         temp = temp.real
                     if(temp < best):

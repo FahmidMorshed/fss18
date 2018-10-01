@@ -6,6 +6,7 @@ from sym import Sym
 import sys, zipfile, codecs, re
 from tabulate import tabulate
 from data import Data
+from super import *
 
 def addRow(data, cells):
     tempRows = []
@@ -116,7 +117,8 @@ def printResult(csvFilename):
     for row in data.rows:
         row[-1] = round(row[-1], 2)
 
-    unsuper(data)
+    #unsuper(data)
+    super(data)
 
     print("\n")
     decideAndPrint(data)
@@ -171,7 +173,7 @@ def decideAndPrint(data):
 
 @O.k
 def test():
-    print('=========Testing on "auto.csv"=============')
+    print('=========Testing on "weatherLong.csv"=============')
     printResult("input/weatherLong.csv")
 
     # print('\n\n')
