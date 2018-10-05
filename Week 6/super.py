@@ -2,6 +2,7 @@ from data import Data
 from config import Config
 from num import Num
 from operator import itemgetter
+from tabulate import tabulate
 import re
 import math
 
@@ -163,6 +164,11 @@ def super(data):
         cuts(i, 0, most, "|.. ")
         col_split_val.append([i, round(splitter(), 4)])
 
-    print ("\nSplitting Value:\n[columNum, expectedVal]")
-    print(col_split_val)
+    for i in range(0, len(col_split_val)):
+        col = col_split_val[i][0]
+        val = col_split_val[i][1]
+        col_split_val[i] = data.name[col], val
+
+    print()
+    print(tabulate(col_split_val, headers=["column", "split_value"]))
 
