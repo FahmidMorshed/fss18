@@ -2,6 +2,8 @@ import math
 from operator import itemgetter
 from num import Num
 from config import Config
+from sym import Sym
+
 
 class Cut:
     def __init__(self, n, c, lo, hi):
@@ -62,6 +64,8 @@ def bestCut(t):
     return cuts[len(cuts)-1]
 
 def fftClause(cut, t, pre):
-    #suffix = cut.lo = cut.hi and "" or " < " + cut.hi
-    #print ((pre or "if    "), t.name[cut.col], "is", cut.lo + suffix, "==>", math.floor(0.5+100*cut.mu))
-    print("Hi")
+    if(cut.lo != cut.hi):
+        suffix = " < " + str(cut.hi)
+    else:
+        suffix = ""
+    print ((pre or "if "), t.name[cut.col], "is", str(cut.lo) + suffix, "==>", math.floor(0.5+100*cut.mu))

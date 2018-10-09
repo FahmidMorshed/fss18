@@ -21,7 +21,7 @@ class Data:
         self.indeps = {}
     
     def indep(self, c):
-        return self.w.get(c) is not None and self.clss != c
+        return self.w.get(c) is None and self.clss != c
     
     def dep(self, c):
         return not self.indep(c)
@@ -63,6 +63,7 @@ class Data:
     def doms(self):
         n = Config().sample
         self.name.append(">dom")
+
         for row1 in self.rows:
             row1.append(0)
             for i in range(0,n):
@@ -73,6 +74,7 @@ class Data:
                     continue
                 if(self.dom(row1, row2)):
                     row1[-1] += 1/n
+        self.w[len(self.name)-1] = 1
 
 """
 Calculate normalized value of x. num carries the value of hi & low

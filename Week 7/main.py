@@ -14,12 +14,15 @@ def addRow(data, cells):
     for i, use in data._use.items():
         if (use == True):
             x = cells[i]
+            x = str(x)
             if ("?" not in x):
-                if (data.nums.get(i, 0) != 0):
+                if(data.nums.get(i, 0) != 0):
                     x = float(x)
                     data.nums.get(i).numInc(x)
                 else:
                     data.syms.get(i).symInc(x)
+            else:
+                x = Config().garbageValue
             tempRows.append(x)
     data.rows.append(tempRows)
 
@@ -105,7 +108,6 @@ def printResult(csvFilename):
     print("#\tName\t\t n \t       mode \t       freq")
     for i, x in data.syms.items():
         print("%d   %15s \t %d \t %10s \t %10.2f" % (i, data.name[i], x.n, x.mode, x.most))
-        # print(str(i) + "\t" + data.name[i][:7] + ".." + "\t" + str(x.n))
 
     print("\n#\tName\t\t n \t\t mu \t\t sd")
     for i, x in data.nums.items():
@@ -113,7 +115,11 @@ def printResult(csvFilename):
 
     data.doms()
 
+
+
+    print ("FFT: ")
     fft(data, 4, "if")
+
     #
     #
     # data.rows.sort(key=sortByDom, reverse=True)
@@ -176,21 +182,31 @@ def decideAndPrint(data):
 
 
 
+
+def fftHeader(names, cut, t):
+    t.name.remove(cut.col)
+    for x in t.rows:
+        if withinCut(x[cut.col], cut.lo, cut.hi):
+            t.rows.remove(x)
+    return t
+
 def fft(t, d, pre):
-    d = d or 4
     if d<=0:
         return True
     if len(t.rows) < Config().fftMin:
         return True
     cut = bestCut(t)
     fftClause(cut, t, pre)
-    header(t, t.name)
+
+    otherwise = Data()
+    header(otherwise, t.name)
+    #t = fftHeader(t.name, cut, t)
 
     for x in t.rows:
         if not withinCut(x[cut.col], cut.lo, cut.hi):
-            addRow(t, x)
+            addRow(otherwise, x)
 
-    return fft(t, d-1, "else")
+    return fft(otherwise, d-1, "else")
 
 @O.k
 def test():
@@ -198,10 +214,6 @@ def test():
 
     print('=========Testing on "weatherLong.csv"=============')
     printResult("input/weatherLong.csv")
-
-    # print('\n\n')
-    # print ('=========Testing on "weather.csv"==========')
-    # printResult("weather.csv")
 
     print('\n\n')
     print('=======Testing on "weatherLong.csv"========')
