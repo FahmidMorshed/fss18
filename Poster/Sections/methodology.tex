@@ -1,0 +1,13 @@
+\section{Methodology}
+In this study, the authors propose a context-aware rank transformation to address the variations in the distribution of predictors before fitting them to the universal defect prediction model. They used 21 code metrics, five process metrics, and six context factors as predictors (i.e., programming language, issue tracking, the total lines of code, the total number of files, the total number of commits, and the total number of developers). The context-aware approach stratifies the entire set of projects by context factors, and clusters the
+projects with similar distribution of predictors. They applied every tenth quantile of predictors on each cluster to formulate ranking functions. After transformation, the predictors from different projects have exactly the same scales. The universal model was then built based on the transformed predictors.\\
+They applied their approach on 1,398 open source projects hosted on SourceForge and GoogleCode. They examined the generalizability of the universal model
+by applying it on five external projects also.\\
+They claimed that their main contributions are:
+
+\begin{enumerate}
+\bf\item Context-aware rank transformation
+
+\bf\item Context factors as predictors of the universal model
+\end{enumerate}
+

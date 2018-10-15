@@ -1,0 +1,129 @@
+\section{Introduction}
+In this study, the authors propose a context-aware rank transformation to address the variations in the distribution of predictors before fitting them to the universal defect prediction model. They used 21 code metrics, five process metrics, and six context factors as predictors (i.e., programming language, issue tracking, the total lines of code, the total number of files, the total number of commits, and the total number of developers). The context-aware approach stratifies the entire set of projects by context factors, and clusters the
+projects with similar distribution of predictors. They applied every tenth quantile of predictors on each cluster to formulate ranking functions. After transformation, the predictors from different projects have exactly the same scales. The universal model was then built based on the transformed predictors.\\
+They applied their approach on 1,398 open source projects hosted on SourceForge and GoogleCode. They examined the generalizability of the universal model
+by applying it on five external projects also.\\
+They claimed that their main contributions are:
+
+\begin{enumerate}
+\bf\item Context-aware rank transformation
+
+\bf\item Context factors as predictors of the universal model
+\end{enumerate}
+
+
+\begin{table}
+\begin{center}
+\caption{Important characteristics of the subject programs.}
+ \begin{tabular}{|p{2.5cm}| p{1cm}| p{1cm}| p{1.2cm}| p{1cm}| p{1cm}|}
+ \hline
+ \textbf{Property} & \textbf{Apache POI} & \textbf{Closure} & \textbf{HSQLDB} & \textbf{JFree Chart} & \textbf{Joda Time}\\[0.5ex] 
+ \hline
+ Total Java SLOC & 283,845 & 724,089 & 178,018 & 125,659 & 80,462 \\ 
+
+ Test SLOC & 68,832 & 93,528 & 18,425 & 44,297 & 51,444 \\
+ 
+ Statement coverage & 67\% & 76\% & 27\% & 54\% & 91\%\\
+ 
+ Decision coverage & 60\% & 77\% & 17\% & 45\% & 82\%\\
+ 
+ MC coverage & 49\% & 67\% & 9\% & 27\% & 70\%\\ [1ex] 
+ \hline
+ \# mutants & 27,565 & 30,779 & 50,302 & 29,699 & 9,552\\
+ \# detected mutants & 17,835 & 27,325 & 50,125 & 23,585 & 8,483\\
+ Equivalent mutants & 35\% & 11\% & 0.4\% & 21\% & 11\%\\[1ex]
+ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\section{Data Preprocessing}
+
+It is very likely that predictors from different projects of various contexts exhibit different distribution  \cite{zhang2013does}. To overcome this challenge towards building a universal defect prediction model, they proposed a context-aware rank transformation approach, as illustrated in Figure 1.
+
+\begin{figure*}
+\vspace{10pt}
+\includegraphics[width=\textwidth,height=8cm]{Coverage_result.JPG}
+\caption{Normalized effectiveness scores (left axis) plotted against coverage (bottom axis) for all subjects. Rows show the results for one suite size; columns show the results for one project. N/A indicates that the project did not have enough test cases to fill in that frame.}
+\label{f1}
+\end{figure*}
+
+
+
+\section{Context Factors}
+They chose six context factors based on their availability to open source projects.
+\begin{enumerate}
+\bf\item Programming Language (PL)
+\bf\item Issue Tracking (IT) 
+\bf\item Total Lines of Code (TLOC)
+\bf\item Total Number of Files (TNF)
+\bf\item Total Number of Commits (TNC)
+\bf\item Total Number of Developers (TND)
+\end{enumerate}
+They stratified the entire set of projects based on the aforementioned six context factors. They got 5,2,4,4,4, and 4 groups, respectively. In total, They obtained 2560 (i.e.,$ 5 $ x $2 $ x $4$ x $4$ x $4$ x $4$) non-overlapped groups.
+
+
+\section{Clustering Similar Projects}
+To derive more accurate quantiles of a particular metric, They grouped the projects with the similar distribution of the metric. Two distributions are similar if their difference is neither statistically significant nor significantly large. For each metric m, the clusters of projects with the similar distribution of metric m are obtained using an algorithm. It has two major steps:-
+
+\begin{enumerate}
+\item Comparing the Distribution of Metrics - Mann-Whitney U test was used
+\item Quantifying the Difference between Distributions - Cliff's $\delta$ was used
+\end{enumerate}
+
+\section{Obtaining Ranking Functions}
+\input{Tables/different_coverages_stats.tex}
+
+
+The ranking function transforms the raw metric values to relatively predefined values (i.e., ranging from one to ten). The researchers  used the quantiles of metric values to formulate our ranking functions. For example, if every tenth quantile for a metric m1 in cluster Cl is: $11, 22, 33, 44, 55, 66, 77, 88,$
+and $99$ respectively. Then the value 27 of metric m1 will be converted to 3 if the corresponding project belongs to cluster Cl. This is because the value 27 is greater than 22 (i.e., the 20$\%$ quantile) and less than 33 (i.e., the 30$\%$ quantile)
+
+\section{Building a Universal Defect Prediction Model}
+They applied Naive Bayes as the modelling technique in their experiments. Before transforming a metric $m_{i}$ for project $p_{j}$ , we identify context factors of project $p_{j}$ and formulate a vector like $< m_{i}, C++, useIT, moreT LOC, lessT NF, lessT NC, lessT ND >$.  In order to locate the ranking functions, they compared the vector of project $p_{j}$ to the vectors of all clusters to determine which cluster project $p_{j}$ belongs to.
+
+\section{Case Study Results}
+\textbf{RQ1: Can a context-aware rank transformation provide predictive power comparable to the power of log transformation?}\\
+rank transformations to the models built using log transformations. Table 1. presents the mean values of the six performance measures of both log and rank transformations, and the corresponding p-values of Wilcoxon rank sum test. The
+results show the difference between the two transformations is small (i.e., less than 0.10). They concluded that rank transformation achieves comparable performance to log transformation. It is reasonable to use the proposed rank transformation method to build universal defect prediction models.\\
+\textbf{RQ2: What is the performance of the universal defect
+prediction model?}\\
+and the AUC value. Hence, the context factors are good predictors for building a universal defect prediction model.\\
+\textbf{RQ3: What is the performance of the universal defect prediction model on external projects?}\\
+ble predictive power.
+
+
+\begin{table}
+\begin{center}
+\caption{The performance measures for the universal models built using CM , CPM and CPMC}
+ \begin{tabular}{|c c c c |} 
+ \hline
+ \textbf{Measures} & \textbf{CM} & \textbf{CPM} & \textbf{CPMC}\\ [0.5ex] 
+ \hline
+ prec & 0.36 & 0.38 & 0.40 \\ 
+ \hline
+ pd & 0.91 & 0.83 & 0.86 \\
+ \hline
+ fpr & 0.87 & 0.76 & 0.70 \\
+ \hline
+ F-measure & 0.51 & 0.51 & 0.55\\
+ \hline
+ g-measure & 0.23 & 0.36 & 0.42\\
+ \hline
+ AUC & 0.58 & 0.60 & 0.65\\ [1ex] 
+ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+%\section{Threats to validity}
+%The main threats that they mentioned on their paper is due to data cleaning. They neglected a large no. of projects with negligible fix-inducing or non-fixing commits
+
+\section{Conclusion}
+In future, their plan is to evaluate the feasibility of the universal
+model for commercial projects. They have also thought about making a plugin for a version control system or IDE.
+
+
+
+
+
