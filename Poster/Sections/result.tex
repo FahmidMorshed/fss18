@@ -1,19 +1,12 @@
-\section{Case Study Results}
-\begin{figure*}
-\vspace{10pt}
-\includegraphics[width=\textwidth,height=8cm]{Figures/Coverage_result.JPG}
-\caption{Normalized effectiveness scores (left axis) plotted against coverage (bottom axis) for all subjects. Rows show the results for one suite size; columns show the results for one project. N/A indicates that the project did not have enough test cases to fill in that frame.}
-\label{f1}
-\end{figure*}
+\section{Results}
 
-\textbf{RQ1: Can a context-aware rank transformation provide predictive power comparable to the power of log transformation?}\\
-rank transformations to the models built using log transformations. Table 1. presents the mean values of the six performance measures of both log and rank transformations, and the corresponding p-values of Wilcoxon rank sum test. The
-results show the difference between the two transformations is small (i.e., less than 0.10). They concluded that rank transformation achieves comparable performance to log transformation. It is reasonable to use the proposed rank transformation method to build universal defect prediction models.\\
-\textbf{RQ2: What is the performance of the universal defect
-prediction model?}\\
-and the AUC value. Hence, the context factors are good predictors for building a universal defect prediction model.\\
-\textbf{RQ3: What is the performance of the universal defect prediction model on external projects?}\\
-ble predictive power.
+\textbf{RQ1: Is size correlated with effectiveness?}\\
+There is a moderate to very high correlation between the effectiveness of a test suite and the number of test methods it contains (Pearson's $r^2$ value range of 0.26 to 0.97).\\
 
+\textbf{RQ2: Is Coverage Correlated With Effectiveness When Size Is Ignored?}\\
+There is a moderate to high correlation between the effectiveness and the coverage of a test suite when the influence of suite size is ignored. For normalized measurement, the Kendall's $\tau$ ranges from 0.50 to 0.80.\\
+
+\textbf{RQ3: Is Coverage Correlated With Effectiveness When Size Is Fixed?}\\
+The correlation between coverage and effectiveness drops when suite size is controlled for, typically ranges from low to moderate (from 0.1 to 0.4 in most cases), meaning it is not safe to assume that effectiveness is correlated with coverage. Additionally, from \ref{tab:coverageTable} shows that, the type of coverage used had little influence on the strength of the relationship.
 
 \input{Tables/different_coverages_stats.tex}

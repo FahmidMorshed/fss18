@@ -1,15 +1,12 @@
 \section{Introduction}
-In this study, the authors propose a context-aware rank transformation to address the variations in the distribution of predictors before fitting them to the universal defect prediction model. They used 21 code metrics, five process metrics, and six context factors as predictors (i.e., programming language, issue tracking, the total lines of code, the total number of files, the total number of commits, and the total number of developers). The context-aware approach stratifies the entire set of projects by context factors, and clusters the
-projects with similar distribution of predictors. They applied every tenth quantile of predictors on each cluster to formulate ranking functions. After transformation, the predictors from different projects have exactly the same scales. The universal model was then built based on the transformed predictors.\\
-They applied their approach on 1,398 open source projects hosted on SourceForge and GoogleCode. They examined the generalizability of the universal model
-by applying it on five external projects also.\\
-They claimed that their main contributions are:
-
-\begin{enumerate}
-\bf\item Context-aware rank transformation
-
-\bf\item Context factors as predictors of the universal model
-\end{enumerate}
+Testing is an important part of producing high quality software, but its effectiveness depends on the quality of the Test Suite. Testing textbooks often recommend coverage as one of the metrics for measuring effectiveness of a test suite. \\% \cite{perry2007effective}. \\
+But unfortunately, different previous work found contradictory results in different research. For example, Gligoric et al. \cite{gligoric2015guidelines} found that, effectiveness of each test suite using mutation testing has a Kendall's $\tau$ correlation from 0.452 to 0.757 when size of the suite is not considered and from 0.585 to 0.958 when considered suite size. On a different experiment, Gopinath et al. \cite{gopinath2014code} found that, coverage is correlated with effectiveness across project with for all coverage types and for both developer-generated and automatic-generated suits. They also showed that, including suite size in the regression model did not improve the results. \\
+So, due to different assumption such as small or synthetic programs, confounding influence of test suite size and using impractical adequate suites, no consensus was found in code coverage as measure of effectiveness in a test suite. That's why, Inozemtseva et al \cite{inozemtseva2014coverage} proposed three research questions.
+\begin{itemize}
+    \item \textbf{RQ1:} Is The Size Of A Test Suite Correlated With Effectiveness?
+    \item \textbf{RQ2:} Is The Coverage Of A Test Suite Correlated With Effectiveness When Suite Size Is Ignored?
+    \item \textbf{RQ3:} Is The Coverage Of A Test Suite Correlated With Effectiveness When Suite Size Is Fixed?
+\end{itemize}
 
 
 \input{Tables/subject_program.tex}
